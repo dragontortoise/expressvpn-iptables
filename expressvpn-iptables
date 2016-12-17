@@ -24,8 +24,11 @@ iptables -A OUTPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 # created by ExpressVPN.
 iptables -A OUTPUT -o tun0 -j ACCEPT
 
+# For each ExpressVPN's OpenVPN server IP address, we need to allow packets
+# to go out from our machine to it to initiate the VPN connection.
 for ip in `/sbin/route -n | grep $network_device | cut -d' ' -f 1`
 do
+  # IP addresses which end with ".0" is not a host address, so we skip them.
   if ! [[ $ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.0$ ]]
   then
     iptables -A OUTPUT -p udp -m udp -d $ip --dport 1194 -j ACCEPT
