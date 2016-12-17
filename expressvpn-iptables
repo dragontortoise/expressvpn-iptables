@@ -1,0 +1,36 @@
+#!/bin/bash
+
+source ./expressvpn-iptables.conf
+
+# Set default rules to be DROP.
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -P FORWARD DROP
+
+# Reset all rules.
+iptables -F INPUT
+iptables -F OUTPUT
+iptables -F FORWARD
+
+# Allow connections on loopback interface.
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+
+# Allow connection generated from related or already established connection.
+iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+
+# Allow packets to go out through tun0 which is the default device name
+# created by ExpressVPN.
+iptables -A OUTPUT -o tun0 -j ACCEPT
+
+for ip in `/sbin/route -n | grep $network_device | cut -d' ' -f 1`
+do
+  if ! [[ $ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.0$ ]]
+  then
+    iptables -A OUTPUT -p udp -m udp -d $ip --dport 1194 -j ACCEPT
+  fi
+done;
+
+source ./expressvpn-iptables.local
+

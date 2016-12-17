@@ -18,9 +18,9 @@ ExpressVPN is a commercial OpenVPN service.  You can learn about it here:
 And if you want to sign up one, you can use my referal link below so that
 both of us will earn a free 30 days from ExpressVPN:
 
-  http://<span></span>www.expressrefer.com/refer-a-friend/30-days-free/?refer
-  rer_id=9763644&utm_campaign=referrals&utm_medium=copy_link&utm_source=refer
-  ral_dashboard
+  http://<span></span>www<span></span>.expressrefer.com/refer-a-friend/30-day
+  s-free/?referrer\_id=9763644&utm\_campaign=referrals&utm\_medium=copy\_link
+  &utm\_source=referral\_dashboard
 
   (shorten url: https://goo.gl/DSDUzn )
 
@@ -66,17 +66,36 @@ such leak.
     created by expressvpn-iptables script.  Once iptables rules are cleared,
     all traffic don't have any restriction.
 
+|- expressvpn-iptables.conf : Configuration file.
+
+|- expressvpn-iptables.conf.template : Template file of the configuration
+  file, expressvpn-iptables.conf.
+
+|- expressvpn-iptables.local : Local iptables rules file.
+
+|- expressvpn-iptables.local.template : Template file of the local iptables
+  rules file, expressvpn-iptables.local.
+
+# Install
+
+1. Assuming you are inside expressvpn-iptables project directory.
+2. `% mv expressvpn-iptables.conf.template expressvpn-iptables.conf` and
+  edit the config file as needed.
+3. `% mv expressvpn-iptables.local.template expressvpn-iptables.local` and
+  edit the config file as needed.
+
 # Recommended way of using ExpressVPN and expressvpn-iptables
 
 1. Turn on your computer.  Make sure you don't open any programs which will
-  connect to the Internet yet.
+  connect to the Internet yet.  Assuming you are inside expressvpn-iptables
+  project directory.
 2. `% expressvpn connect`
-3. `% ./expressvpn-iptables`
+3. `% sudo ./expressvpn-iptables`
 4. Now you can use the Internet.
 5. If for any reason the ExpressVPN connection is disconnected, you won't be
   able to use the Internet.  If you don't want to continue working, you can
   shutdown your computer now.  But if not, please continue to step 6.
 6. Close all programs which use Internet connection.
-7. `% ./expressvpn-iptables-flush`
+7. `% sudo ./expressvpn-iptables-flush`
 8. Go to step 2 and repeat the process.
 

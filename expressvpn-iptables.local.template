@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# You can place your additional iptables rules here.
+# Just make sure it won't leak!
+iptables -A OUTPUT -o tun-office -j ACCEPT
+iptables -A OUTPUT -o tun-othervpn -j ACCEPT
+iptables -A OUTPUT -o tun-slowvpn -j ACCEPT
+

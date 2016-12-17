@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# You can specify your network device which has access to the Internet here.
+# Most of the time it will be either eth0 or wlan0.
+network_device="wlan0"
