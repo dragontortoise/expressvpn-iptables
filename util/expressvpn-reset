@@ -1,0 +1,10 @@
+#!/bin/bash
+
+location=$1
+
+cd ~/expressvpn-iptables
+expressvpn disconnect
+sudo ./expressvpn-iptables-flush
+expressvpn connect $location
+sudo ./expressvpn-iptables
+
